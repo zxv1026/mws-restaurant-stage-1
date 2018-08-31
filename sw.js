@@ -20,7 +20,7 @@ let urlsToCache = [
     "img/10.jpg"
 ];
 
-self.addEventListener('install',function (event) {
+self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(cacheName).then(function (cache) {
             console.log('install: ok!');
@@ -29,14 +29,14 @@ self.addEventListener('install',function (event) {
     );
 });
 
-self.addEventListener('activate',function (event) {
-   event.waitUntil(self.clients.claim());
+self.addEventListener('activate', function (event) {
+    event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener('fetch', function (event) {
     let requestUrl = new URL(event.request.url);
     if (requestUrl.origin === location.origin) {
-        if(requestUrl.pathname === '/'){
+        if (requestUrl.pathname === '/') {
             event.respondWith(caches.match('/skeleton'));
             return;
         }
@@ -49,5 +49,5 @@ self.addEventListener('fetch', function (event) {
             })
         );
     }
-    
+
 });
