@@ -1,6 +1,6 @@
 let cacheName = "restaurants";
 let urlsToCache = [
-    "/skeleton",
+    "/",
     "index.html",
     "restaurant.html",
     "css/styles.css",
@@ -34,20 +34,12 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
-    let requestUrl = new URL(event.request.url);
-    if (requestUrl.origin === location.origin) {
-        if (requestUrl.pathname === '/') {
-            event.respondWith(caches.match('/skeleton'));
-            return;
-        }
-        event.respondWith(
-            caches.match(event.request).then(function (response) {
-                if (response) {
-                    return response;
-                }
-                return fetch(event.request);
-            })
-        );
-    }
-
+    event.respondWith(
+        caches.match(event.request).then(function (response) {
+            if (response) {
+                return response;
+            }
+            return fetch(event.request);
+        })
+    );
 });
